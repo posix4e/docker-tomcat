@@ -2,9 +2,9 @@ FROM chrisipa/java
 MAINTAINER Christoph Papke <info@papke.it>
 
 # set environment variables for program versions
-ENV TOMCAT_VERSION=8.0.32 
-ENV TOMCAT_MAJOR=8
-ENV TOMCAT_CHECKSUM=cf38eb8dae38ab3316e7ad0cb6c9245d
+ENV TOMCAT_VERSION=7.0.68 
+ENV TOMCAT_MAJOR=7
+ENV TOMCAT_CHECKSUM=63585913ef1636bac4955f54a1c132b9
 ENV CATALINA_HOME=/opt/tomcat
 ENV PATH=$PATH:$CATALINA_HOME/bin
 
@@ -12,17 +12,17 @@ ENV PATH=$PATH:$CATALINA_HOME/bin
 RUN wget https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip && \
     echo "$TOMCAT_CHECKSUM apache-tomcat-$TOMCAT_VERSION.zip" | md5sum -c && \
     unzip apache-tomcat-$TOMCAT_VERSION.zip -d /opt/ && \
-    ln -s /opt/apache-tomcat-8.0.32 $CATALINA_HOME && \
+    ln -s /opt/apache-tomcat-$TOMCAT_VERSION $CATALINA_HOME && \
     rm -f apache-tomcat-$TOMCAT_VERSION.zip
 
 # create ssl certs dir
-RUN mkdir -p /opt/ssl/certs
+RUN mkdir -p /ssl
 
 # copy keystore to ssl certs dir
-COPY keystore /opt/ssl/certs/keystore
+COPY keystore /ssl/keystore
 
 # mark ssl certs dir as volume
-VOLUME /opt/ssl/certs
+VOLUME /ssl
 
 # copy server.xml with ssl connector to tomcat conf folder
 COPY server.xml $CATALINA_HOME/conf/server.xml
