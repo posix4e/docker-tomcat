@@ -15,6 +15,18 @@ RUN wget https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSIO
     ln -s /opt/apache-tomcat-8.0.32 $CATALINA_HOME && \
     rm -f apache-tomcat-$TOMCAT_VERSION.zip
 
+# create ssl certs dir
+RUN mkdir -p /opt/ssl/certs
+
+# copy keystore to ssl certs dir
+COPY keystore /opt/ssl/certs/keystore
+
+# mark ssl certs dir as volume
+VOLUME /opt/ssl/certs
+
+# copy server.xml with ssl connector to tomcat conf folder
+COPY server.xml $CATALINA_HOME/conf/server.xml
+
 # remove default webapps
 RUN rm -rf $CATALINA_HOME/webapps/ROOT/* \
     $CATALINA_HOME/webapps/examples \
