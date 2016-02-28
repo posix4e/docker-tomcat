@@ -34,9 +34,12 @@ RUN rm -rf $CATALINA_HOME/webapps/ROOT/* \
     $CATALINA_HOME/webapps/manager
 
 # add index.jsp to ROOT webapp
-ADD index.jsp $CATALINA_HOME/webapps/ROOT
+ADD index.jsp $CATALINA_HOME/webapps/ROOT/index.jsp
 
-# make tomcat binaries executable
+# remove tomcat bat files
+RUN rm $CATALINA_HOME/bin/*.bat
+
+# make tomcat sh files executable
 RUN chmod +x $CATALINA_HOME/bin/*.sh
 
 # expose port 8080
