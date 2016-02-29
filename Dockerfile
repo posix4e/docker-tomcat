@@ -43,8 +43,9 @@ RUN rm $CATALINA_HOME/bin/*.bat
 # make tomcat sh files executable
 RUN chmod +x $CATALINA_HOME/bin/*.sh
 
-# expose port 8080
+# expose ports
 EXPOSE 8080
+EXPOSE 8443
 
 # execute startupt script
 CMD ["catalina.sh", "run"]
