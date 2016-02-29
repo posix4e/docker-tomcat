@@ -29,6 +29,7 @@ COPY server.xml $CATALINA_HOME/conf/server.xml
 
 # remove default webapps
 RUN rm -rf $CATALINA_HOME/webapps/ROOT/* \
+    $CATALINA_HOME/webapps/docs \
     $CATALINA_HOME/webapps/examples \
     $CATALINA_HOME/webapps/host-manager \
     $CATALINA_HOME/webapps/manager
