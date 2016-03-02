@@ -20,7 +20,7 @@ RUN wget https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSIO
 RUN mkdir -p $TOMCAT_KEYSTORE_FOLDER
 
 # copy default keystore to tomcat keystore dir
-COPY keystore $TOMCAT_KEYSTORE_FOLDER
+COPY keystore $TOMCAT_KEYSTORE_FOLDER/keystore
 
 # mark tomcat keystore dir as volume
 VOLUME $TOMCAT_KEYSTORE_FOLDER
