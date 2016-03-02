@@ -2,11 +2,12 @@ FROM chrisipa/java
 MAINTAINER Christoph Papke <info@papke.it>
 
 # set environment variables for program versions
-ENV TOMCAT_VERSION=7.0.68 
-ENV TOMCAT_MAJOR=7
-ENV TOMCAT_CHECKSUM=63585913ef1636bac4955f54a1c132b9
-ENV CATALINA_HOME=/opt/tomcat
-ENV PATH=$PATH:$CATALINA_HOME/bin
+ENV TOMCAT_VERSION 7.0.68 
+ENV TOMCAT_MAJOR 7
+ENV TOMCAT_CHECKSUM 63585913ef1636bac4955f54a1c132b9
+ENV TOMCAT_KEYSTORE_FOLDER /opt/ssl/tomcat
+ENV CATALINA_HOME /opt/tomcat
+ENV PATH $PATH:$CATALINA_HOME/bin
 
 # download and extract tomcat to opt directory
 RUN wget https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.zip && \
@@ -15,14 +16,14 @@ RUN wget https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSIO
     ln -s /opt/apache-tomcat-$TOMCAT_VERSION $CATALINA_HOME && \
     rm -f apache-tomcat-$TOMCAT_VERSION.zip
 
-# create ssl certs dir
-RUN mkdir -p /ssl
+# create tomcat keystore dir
+RUN mkdir -p $TOMCAT_KEYSTORE_FOLDER
 
-# copy keystore to ssl certs dir
-COPY keystore /ssl/keystore
+# copy default keystore to tomcat keystore dir
+COPY keystore $TOMCAT_KEYSTORE_FOLDER
 
-# mark ssl certs dir as volume
-VOLUME /ssl
+# mark tomcat keystore dir as volume
+VOLUME $TOMCAT_KEYSTORE_FOLDER
 
 # copy server.xml with ssl connector to tomcat conf folder
 COPY server.xml $CATALINA_HOME/conf/server.xml
@@ -46,6 +47,12 @@ RUN chmod +x $CATALINA_HOME/bin/*.sh
 # expose ports
 EXPOSE 8080
 EXPOSE 8443
+
+# copy entry point to docker image root
+COPY docker-entrypoint.sh /entrypoint.sh
+
+# specifiy entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
 
 # execute startupt script
 CMD ["catalina.sh", "run"]
