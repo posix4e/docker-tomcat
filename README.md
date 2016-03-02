@@ -25,7 +25,7 @@ When you start the Tomcat container, you can adjust the configuration by passing
 ### `CATALINA_OPTS`
 
  - Java runtime options used when the "start", "run" or "debug" command is executed 
- - Default value: `` 
+ - Default value:  
 
 ## Using docker
 
