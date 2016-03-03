@@ -1,7 +1,7 @@
 FROM chrisipa/java
 MAINTAINER Christoph Papke <info@papke.it>
 
-# set environment variables for program versions
+# set environment variables
 ENV CATALINA_HOME /opt/tomcat
 ENV PATH $PATH:$CATALINA_HOME/bin
 ENV TOMCAT_VERSION 7.0.68 
