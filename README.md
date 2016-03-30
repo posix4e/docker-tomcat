@@ -31,7 +31,7 @@ When you start the Tomcat container, you can adjust the configuration by passing
 
 ### Example 1: Run Tomcat container with java memory options for max heap size
 
-1. Run the Tomcat container with the following command:
+ - Run the Tomcat container with the following command:
   ```
   docker run --name tomcat -d -p 8080:8080 -p 8443:8443 -e "CATALINA_OPTS=-Xmx768m" chrisipa/tomcat
   ```
